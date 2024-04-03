@@ -6,8 +6,30 @@
 
 :root {}
 
-.content {
-    background-color: red;
-    width: 100px;
-    height: 100px;
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 100px;
+    height: 70px;
+    /*change*/
+    background-color: grey;
+}
+
+main {}
+
+footer {
+    margin-top: auto;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*change*/
+    background-color: grey;
 }
