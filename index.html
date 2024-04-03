@@ -11,9 +11,35 @@
     <header><h1>Wonderlust</h1></header>
     <main>
       <section id="iternary"></section>
-      <section class="budget"></section>
-      <section class="expanse"></section>
-      <section class="logger"></section>
+      <section class="budget">
+        <h4 class="spending">Spending</h4>
+        <div id="balance-div"></div>
+        <div class="budget-holder">
+          <input type="number" placeholder="Enter the budget..." />
+          <button class="budget-edit-btn">
+            <img src="./images/pencil-square.svg" alt="edit" />
+          </button>
+        </div>
+      </section>
+      <section class="expanse">
+        <h4>Expanses</h4>
+        <form action="" id="expenses-form">
+          <input
+            type="text"
+            name="expense"
+            placeholder="Enter your expense.."
+          />
+          <input
+            type="number"
+            name="expense-amount"
+            placeholder="Enter your expense.."
+          />
+          <button type="submit">Add to list</button>
+        </form>
+      </section>
+      <section class="logger">
+        <h3>Expenses List</h3>
+      </section>
     </main>
     <footer>Agata Deter &copy Copyrights 2024</footer>
   </body>

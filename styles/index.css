@@ -22,7 +22,12 @@ header {
     background-color: grey;
 }
 
-main {}
+main {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 2;
+    width: 80vw;
+}
 
 footer {
     margin-top: auto;
