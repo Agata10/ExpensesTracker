@@ -1,7 +1,7 @@
 const destinationForm = document.getElementById("destination-form");
 const destinationInput = destinationForm.querySelector("input[type='text']");
 const date = destinationForm.querySelectorAll("input[type='date']");
-
+const destDiv = document.getElementById("dest-log");
 // DESTINATION FORM VALIDITY
 destinationForm.addEventListener("submit", addDestination);
 destinationInput.addEventListener("input", checkDestinationVal);
@@ -20,6 +20,7 @@ function addDestination(e) {
     endDate: endDate,
   };
   localStorage.setItem("destination", JSON.stringify(obj));
+  handleDestinationDiv();
 }
 
 function checkDestinationVal() {
@@ -50,5 +51,32 @@ function checkEndDate() {
   }
 }
 
-//SET UP THE TEMPLATE
-function createDestinationDiv(destination, start, end) {}
+//SET UP THE TEMPLATE FOR DESTINATION
+function createDestinationDiv() {
+  const postTemplate = document.getElementById("temp-dest");
+  const clone = postTemplate.content.cloneNode(true);
+  const destination = clone.querySelector("h3");
+  const startD = clone.querySelector("#start-date-holder");
+  const endD = clone.querySelector("#end-date-holder");
+
+  destination.textContent = JSON.parse(
+    localStorage.getItem("destination")
+  ).destination;
+  startD.textContent = JSON.parse(
+    localStorage.getItem("destination")
+  ).startDate;
+  endD.textContent = JSON.parse(localStorage.getItem("destination")).endDate;
+
+  return clone;
+}
+
+function handleDestinationDiv() {
+  if (localStorage.getItem("destination") !== null) {
+    while (destDiv.firstChild) {
+      destDiv.removeChild(destDiv.firstChild);
+    }
+    destDiv.appendChild(createDestinationDiv());
+  }
+}
+
+handleDestinationDiv();
