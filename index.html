@@ -10,65 +10,66 @@
   <body>
     <header><h1>Wonderlust</h1></header>
     <main>
-      <div id="destination">
-        <h3>Destination</h3>
-        <form action="" id="destination-form">
-          <input
-            type="text"
-            name="destination"
-            placeholder="Enter your destination..."
-          />
-          <div class="enter-dates">
-            <input type="date" name="start-date" />
-            <input type="date" name="end-date" />
-          </div>
-          <button type="submit">Add</button>
-        </form>
-      </div>
-      <div class="budget">
-        <h3>Budget</h3>
-        <form action="" id="budget-form">
-          <input
-            type="number"
-            name="budget"
-            placeholder="Enter your budget..."
-          />
-          <button type="submit">Add</button>
-        </form>
-      </div>
-      <div class="expense">
-        <h3>Expanses</h3>
-        <form action="" id="expenses-form">
-          <input
-            type="text"
-            name="expense"
-            placeholder="Enter your expense.."
-          />
-          <input
-            type="number"
-            name="expense-amount"
-            placeholder="Enter your expense.."
-          />
-          <button type="submit">Add</button>
-        </form>
-      </div>
-      <div id="dest-log">
-        <img src="" alt="" />
-        <h3>Your destination</h3>
-        <h4>Start date</h4>
-        <h4>End date</h4>
-      </div>
-      <div id="logger">
-        <h2>Expenses List</h2>
-      </div>
-      <div id="budget-log">
-        <h3 class="spending">Spending</h3>
-        <div id="balance-div"></div>
-        <div class="budget-holder">
-          <input type="number" placeholder="Enter the budget..." />
-          <button class="budget-edit-btn">
-            <img src="./images/pencil-square.svg" alt="edit" />
-          </button>
+      <div class="content">
+        <!-- destination form -->
+        <div id="destination">
+          <h3>Destination</h3>
+          <form action="" id="destination-form">
+            <input
+              type="text"
+              name="destination"
+              placeholder="Enter your destination..."
+            />
+            <div class="enter-dates">
+              <input type="date" name="start-date" />
+              <input type="date" name="end-date" />
+            </div>
+            <button type="submit">Add</button>
+          </form>
+        </div>
+        <!-- budget form -->
+        <div class="budget">
+          <h3>Budget</h3>
+          <form action="" id="budget-form">
+            <input
+              type="number"
+              name="budget"
+              placeholder="Enter your budget..."
+            />
+            <button type="submit">Add</button>
+          </form>
+        </div>
+        <!-- expense form -->
+        <div class="expense">
+          <h3>Expanses</h3>
+          <form action="" id="expenses-form">
+            <input type="text" name="expense" placeholder="Enter expense.." />
+            <input
+              type="number"
+              name="expense-amount"
+              placeholder="Enter amount.."
+            />
+            <button type="submit">Add</button>
+          </form>
+        </div>
+        <!-- destination holder template -->
+        <div id="dest-log">
+          <template>
+            <img src="" alt="" />
+            <h3 id="place-holder">Your destination</h3>
+            <h4 id="start-date-holder">Start date</h4>
+            <h4 id="end-date-holder">End date</h4>
+          </template>
+        </div>
+        <!-- expenses logger -->
+        <div id="logger">
+          <h2>Expenses List</h2>
+        </div>
+        <!-- budget tracker holder -->
+        <div id="budget-log">
+          <h3 class="spending-holder">Spending</h3>
+          <div id="balance-div"></div>
+          <h3 class="budget-holder">Budget</h3>
         </div>
       </div>
     </main>

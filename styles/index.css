@@ -23,11 +23,19 @@ header {
 }
 
 main {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    width: 100vw;
+}
+
+.content {
     display: grid;
-    justify-content: space-between;
+    column-gap: 100px;
+    row-gap: 40px;
     grid-template-rows: 1fr auto auto auto;
     grid-template-columns: repeat(3, 1fr);
-    min-width: 100vw;
+
 }
 
 .budget,
@@ -36,6 +44,19 @@ main {
     width: 300px;
     height: 250px;
     border: 1px solid black;
+}
+
+#dest-log,
+#logger,
+#budget-log {
+    grid-column: span 3;
+}
+
+#dest-log {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
 }
 
 footer {
