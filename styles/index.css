@@ -24,9 +24,18 @@ header {
 
 main {
     display: grid;
+    justify-content: space-between;
     grid-template-rows: 1fr auto;
-    grid-template-columns: 2;
-    width: 80vw;
+    grid-template-columns: repeat(3, 1fr);
+    min-width: 100vw;
+}
+
+.budget,
+.expense,
+.iterniary {
+    width: 300px;
+    height: 250px;
+    border: 1px solid black;
 }
 
 footer {

@@ -10,19 +10,24 @@
   <body>
     <header><h1>Wonderlust</h1></header>
     <main>
-      <section id="iternary"></section>
-      <section class="budget">
-        <h4 class="spending">Spending</h4>
-        <div id="balance-div"></div>
-        <div class="budget-holder">
-          <input type="number" placeholder="Enter the budget..." />
-          <button class="budget-edit-btn">
-            <img src="./images/pencil-square.svg" alt="edit" />
-          </button>
-        </div>
-      </section>
-      <section class="expanse">
-        <h4>Expanses</h4>
+      <div id="destination">
+        <h3>Destination</h3>
+        <form action="" id="destination-form">
+          <input
+            type="text"
+            name="destination"
+            placeholder="Enter your destination..."
+          />
+          <div class="enter-dates">
+            <input type="date" name="start-date" />
+            <input type="date" name="end-date" />
+          </div>
+          <button type="submit">Add</button>
+        </form>
+      </div>
+      <div class="budget"></div>
+      <div class="expense">
+        <h3>Expanses</h3>
         <form action="" id="expenses-form">
           <input
             type="text"
@@ -36,10 +41,26 @@
           />
           <button type="submit">Add to list</button>
         </form>
-      </section>
-      <section class="logger">
-        <h3>Expenses List</h3>
-      </section>
+      </div>
+      <div id="dest-log">
+        <img src="" alt="" />
+        <h3>Your destination</h3>
+        <h4>Start date</h4>
+        <h4>End date</h4>
+      </div>
+      <div id="logger">
+        <h2>Expenses List</h2>
+      </div>
+      <div id="budget-log">
+        <h3 class="spending">Spending</h3>
+        <div id="balance-div"></div>
+        <div class="budget-holder">
+          <input type="number" placeholder="Enter the budget..." />
+          <button class="budget-edit-btn">
+            <img src="./images/pencil-square.svg" alt="edit" />
+          </button>
+        </div>
+      </div>
     </main>
     <footer>Agata Deter &copy Copyrights 2024</footer>
   </body>
