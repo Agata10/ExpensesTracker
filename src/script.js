@@ -2,12 +2,19 @@ const destinationForm = document.getElementById("destination-form");
 const destinationInput = destinationForm.querySelector("input[type='text']");
 const date = destinationForm.querySelectorAll("input[type='date']");
 const destDiv = document.getElementById("dest-log");
-// DESTINATION FORM VALIDITY
+//expenses
+const expensesForm = document.getElementById("expenses-form");
+const singleExpense = expensesForm.querySelector("#expense");
+const expenseAmount = expensesForm.querySelector("#expense-amount");
+
 destinationForm.addEventListener("submit", addDestination);
 destinationInput.addEventListener("input", checkDestinationVal);
 date[0].addEventListener("change", checkStartDate);
 date[1].addEventListener("change", checkEndDate);
 
+expensesForm.addEventListener("submit", handleAddingExpenese);
+
+// DESTINATION FORM VALIDITY
 function addDestination(e) {
   e.preventDefault(); // Prevent form submission
   const destination = checkDestinationVal();
@@ -20,7 +27,7 @@ function addDestination(e) {
     endDate: endDate,
   };
   localStorage.setItem("destination", JSON.stringify(obj));
-  handleDestinationDiv();
+  handleDestinationInfo();
 }
 
 function checkDestinationVal() {
@@ -70,7 +77,8 @@ function createDestinationDiv() {
   return clone;
 }
 
-function handleDestinationDiv() {
+//APPEND THE INFO ABOUT DESTINATION
+function handleDestinationInfo() {
   if (localStorage.getItem("destination") !== null) {
     while (destDiv.firstChild) {
       destDiv.removeChild(destDiv.firstChild);
@@ -79,4 +87,38 @@ function handleDestinationDiv() {
   }
 }
 
-handleDestinationDiv();
+//HANDLE ADDING EXPENSE TO THE LIST
+function handleAddingExpenese(e) {
+  e.preventDefault();
+  addExpenseToLocalStorage();
+}
+function addExpenseToLocalStorage() {
+  const obj = { expense: singleExpense.value, amount: expenseAmount.value };
+  let arr = [];
+  if (localStorage.getItem("expenses") === null) {
+    arr.push(obj);
+    localStorage.setItem("expenses", JSON.stringify(arr));
+  } else {
+    arr = JSON.parse(localStorage.getItem("expenses"));
+    console.log(arr);
+    arr.push(obj);
+    localStorage.setItem("expenses", JSON.stringify(arr));
+  }
+}
+
+function createOneSublistDiv() {
+  const subDiv = document.createElement("div");
+  subDiv.classList.add("sublist");
+  subDiv.innerHTML = `
+    <p class="sub-title">${singleExpense.value}</p>
+    <p class="sub-amount">${expenseAmount.value}</p>
+    <img src="./images/pencil-square.svg/>
+    `;
+  return subDiv;
+}
+function validateInputsForExpense(expense, amount) {
+  if (expense === "") {
+  }
+}
+
+handleDestinationInfo();
