@@ -19,10 +19,12 @@
               type="text"
               name="destination"
               placeholder="Enter your destination..."
+              required
+              pattern="^[a-zA-Z]+$"
             />
             <div class="enter-dates">
-              <input type="date" name="start-date" />
-              <input type="date" name="end-date" />
+              <input type="date" name="start-date" required />
+              <input type="date" name="end-date" required />
             </div>
             <button type="submit">Add</button>
           </form>
