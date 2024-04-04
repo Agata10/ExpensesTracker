@@ -22,8 +22,8 @@ date[0].addEventListener("change", checkStartDate);
 date[1].addEventListener("change", checkEndDate);
 
 expensesForm.addEventListener("submit", handleAddingExpenese);
-singleExpense.addEventListener("change", validateInputsForExpense);
-expenseAmount.addEventListener("input", validateInputsForExpense);
+singleExpense.addEventListener("input", validateExpense);
+expenseAmount.addEventListener("input", validateExpenseAmount);
 
 budgetForm.addEventListener("submit", handleAddingBudget);
 
@@ -104,7 +104,8 @@ function appendDestinationInfo() {
 //HANDLE ADDING EXPENSE TO THE LIST
 function handleAddingExpenese(e) {
   e.preventDefault();
-  const isValid = validateInputsForExpense();
+
+  const isValid = validateExpense() && validateExpenseAmount();
   if (isValid) {
     const success = addExpenseToLocalStorage();
     const listDiv = document.getElementById("logger");
@@ -112,6 +113,7 @@ function handleAddingExpenese(e) {
       listDiv.appendChild(
         createOneSublistDiv(singleExpense.value, expenseAmount.value)
       );
+      calcSpending();
       singleExpense.value = "";
       expenseAmount.value = "";
     } else {
@@ -120,6 +122,19 @@ function handleAddingExpenese(e) {
   } else {
     return false;
   }
+}
+
+function calcSpending() {
+  let sumOfExpenses = 0;
+  const spendingHolder = document.querySelector(".spending-holder");
+  const arrayOfexpenses = JSON.parse(localStorage.getItem("expenses"));
+  if (arrayOfexpenses.length !== null) {
+    arrayOfexpenses.forEach((item) => {
+      sumOfExpenses += Number(item.amount);
+    });
+  }
+  spendingHolder.textContent = `Spending: ${sumOfExpenses}$`;
+  return sumOfExpenses;
 }
 
 //HANDLE ADDING EXPENSE TO THE STORAGE
@@ -142,6 +157,7 @@ function addExpenseToLocalStorage() {
       }
     });
     if (!found) {
+      console.log(obj);
       arr.push(obj);
       localStorage.setItem("expenses", JSON.stringify(arr));
       return true;
@@ -157,7 +173,7 @@ function createOneSublistDiv(expense, amount) {
   subDiv.classList.add("sublist");
   subDiv.innerHTML = `
     <p class="sub-title">${expense}</p>
-    <p class="sub-amount">${amount}</p>
+    <p class="sub-amount">${amount}$</p>
     <div>
     <button ><img src="../images/pencil-square.svg" alt="edit" id="edit"></button>
     <button ><img src="../images/trash.svg" alt="trash" id="delete"></button>
@@ -182,11 +198,16 @@ function createOneSublistDiv(expense, amount) {
 }
 
 //VALIDATE THE EXPENSES
-function validateInputsForExpense() {
+function validateExpense() {
   const errorDivs = document.querySelectorAll(".error");
+  const budget = localStorage.getItem("budget");
   errorDivs.forEach((err) => {
     err.style.display = "none";
   });
+  if (budget === null || budget == 0) {
+    createError(expenseAmount, "Please enter budget firstly.");
+    return false;
+  }
   if (singleExpense.value === "") {
     createError(singleExpense, "Please enter the expense");
     return false;
@@ -195,11 +216,26 @@ function validateInputsForExpense() {
     createError(singleExpense, "Please enter only letters");
     return false;
   }
+  return true;
+}
+
+function validateExpenseAmount() {
+  const errorDivs = document.querySelectorAll(".error");
+  const sumOfExpenses = calcSpending();
+  errorDivs.forEach((err) => {
+    err.style.display = "none";
+  });
   if (expenseAmount.value === "") {
     createError(expenseAmount, "Please enter the amount");
     return false;
   }
-
+  if (
+    sumOfExpenses > Number(localStorage.getItem("budget")) ||
+    expenseAmount.value > Number(localStorage.getItem("budget"))
+  ) {
+    createError(expenseAmount, "Ups. Exceeded budget. Change the budget.");
+    return false;
+  }
   return true;
 }
 
@@ -211,18 +247,23 @@ function handleAddingBudget(e) {
     return false;
   }
   localStorage.setItem("budget", budgetInput.value);
-  budgetHolder.textContent = `${budgetInput.value}$`;
+  budgetHolder.textContent = `Budget ${budgetInput.value}$`;
   budgetInput.value = "";
 }
 
 //VALIDATE THE VALUE OF BUDGET
 function validateBudget() {
   const errorDivs = document.querySelectorAll(".error");
+  const sumOfExpenses = calcSpending();
   errorDivs.forEach((err) => {
     err.style.display = "none";
   });
   if (budgetInput.value === "") {
     createError(budgetInput, "Please enter the budget");
+    return false;
+  }
+  if (sumOfExpenses > budgetInput.value) {
+    createError(budgetInput, "Budget can't be lower than spending");
     return false;
   }
   return true;
@@ -251,19 +292,31 @@ function handleDeleting(e) {
     });
 
     localStorage.setItem("expenses", JSON.stringify(newArr));
+    if (JSON.parse(localStorage.getItem("expenses")).length === 0) {
+      localStorage.setItem("budget", 0);
+      budgetHolder.textContent = `Budget 0$`;
+      calcSpending();
+    }
   }
 }
 //HANDLE GETTING INFO FROM LOCAL STORAGE WHEN  PAGE REFRESHED
 function onLoad() {
+  //set up location info
   appendDestinationInfo();
+
+  //set up the expenses list
   const arrayOfexpenses = JSON.parse(localStorage.getItem("expenses")) || [];
   arrayOfexpenses.forEach((item) => {
     const listDiv = document.getElementById("logger");
     listDiv.appendChild(createOneSublistDiv(item.expense, item.amount));
   });
+
+  //set up budget from localStorage
   if (localStorage.getItem("budget") !== null) {
-    budgetHolder.textContent = `${localStorage.getItem("budget")}$`;
+    budgetHolder.textContent = `Budget: ${localStorage.getItem("budget")}$`;
   }
+  //set up the balance
+  calcSpending();
 }
 
 onLoad();
