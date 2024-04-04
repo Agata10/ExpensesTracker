@@ -44,7 +44,6 @@ function addDestination(e) {
 }
 
 function checkDestinationVal() {
-  console.log(destinationInput.value);
   if (destinationInput.value === "") {
     destinationInput.setCustomValidity("Please provide destination name");
   } else if (destinationInput.validity.patternMismatch) {
@@ -78,15 +77,18 @@ function createDestinationDiv() {
   const destination = clone.querySelector("h3");
   const startD = clone.querySelector("#start-date-holder");
   const endD = clone.querySelector("#end-date-holder");
-
-  destination.textContent = JSON.parse(
-    localStorage.getItem("destination")
-  ).destination;
-  startD.textContent = JSON.parse(
-    localStorage.getItem("destination")
-  ).startDate;
-  endD.textContent = JSON.parse(localStorage.getItem("destination")).endDate;
-
+  const destInfo = JSON.parse(localStorage.getItem("destination"));
+  if (destInfo !== null) {
+    destination.textContent =
+      destInfo.destination.charAt(0).toUpperCase() +
+      destInfo.destination.slice(1).toLowerCase();
+    startD.textContent = destInfo.startDate;
+    endD.textContent = destInfo.endDate;
+  } else {
+    destination.textContent = "";
+    startD.textContent = "";
+    endD.textContent = "";
+  }
   return clone;
 }
 
@@ -157,7 +159,6 @@ function addExpenseToLocalStorage() {
       }
     });
     if (!found) {
-      console.log(obj);
       arr.push(obj);
       localStorage.setItem("expenses", JSON.stringify(arr));
       return true;
@@ -280,7 +281,6 @@ function createError(elem, message) {
 
 //DELETE ELEM FROM LIST
 function handleDeleting(e) {
-  console.log(e.target);
   if (e.target.id === "delete") {
     const subListParent = e.target.parentNode.parentNode.parentNode;
     const expense =
@@ -295,8 +295,8 @@ function handleDeleting(e) {
     if (JSON.parse(localStorage.getItem("expenses")).length === 0) {
       localStorage.setItem("budget", 0);
       budgetHolder.textContent = `Budget 0$`;
-      calcSpending();
     }
+    calcSpending();
   }
 }
 //HANDLE GETTING INFO FROM LOCAL STORAGE WHEN  PAGE REFRESHED
