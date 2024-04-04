@@ -10,6 +10,7 @@ const expenseAmount = expensesForm.querySelector("#expense-amount");
 //budget
 const budgetForm = document.getElementById("budget-form");
 const budgetInput = budgetForm.querySelector("input");
+const budgetHolder = document.querySelector(".budget-holder");
 //delete
 const listDiv = document.getElementById("logger");
 
@@ -204,20 +205,26 @@ function validateInputsForExpense() {
 
 //HANDLE ADDING BUDGET
 function handleAddingBudget(e) {
-  const isValid = validateBudget();
   e.preventDefault();
+  const isValid = validateBudget();
   if (!isValid) {
     return false;
   }
+  localStorage.setItem("budget", budgetInput.value);
+  budgetHolder.textContent = `${budgetInput.value}$`;
+  budgetInput.value = "";
 }
 
 //VALIDATE THE VALUE OF BUDGET
 function validateBudget() {
   if (budgetInput.value === "") {
-    createError(budgetInput, "Please enter the amount");
+    createError(budgetInput, "Please enter the budget");
     return false;
   }
-  errorDiv.style.display = "none;";
+  const errorDivs = document.querySelectorAll(".error");
+  errorDivs.forEach((err) => {
+    err.style.display = "none";
+  });
   return true;
 }
 
@@ -254,6 +261,9 @@ function onLoad() {
     const listDiv = document.getElementById("logger");
     listDiv.appendChild(createOneSublistDiv(item.expense, item.amount));
   });
+  if (localStorage.getItem("budget") !== null) {
+    budgetHolder.textContent = `${localStorage.getItem("budget")}$`;
+  }
 }
 
 onLoad();
