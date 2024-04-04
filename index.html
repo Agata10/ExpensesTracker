@@ -36,6 +36,7 @@
             <input
               type="number"
               name="budget"
+              step=".01"
               placeholder="Enter your budget..."
             />
             <button type="submit">Add</button>
@@ -45,18 +46,25 @@
         <div class="expense">
           <h3>Expanses</h3>
           <form action="" id="expenses-form">
-            <input
-              type="text"
-              name="expense"
-              placeholder="Enter expense.."
-              id="expense"
-            />
-            <input
-              type="number"
-              name="expense-amount"
-              placeholder="Enter amount.."
-              id="expense-amount"
-            />
+            <div>
+              <input
+                type="text"
+                name="expense"
+                placeholder="Enter expense.."
+                id="expense"
+              />
+              <div class="error"></div>
+            </div>
+            <div>
+              <input
+                type="number"
+                step=".01"
+                name="expense-amount"
+                placeholder="Enter amount.."
+                id="expense-amount"
+              />
+              <div class="error"></div>
+            </div>
             <button type="submit">Add</button>
           </form>
         </div>

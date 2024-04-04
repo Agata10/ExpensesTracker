@@ -13,6 +13,8 @@ date[0].addEventListener("change", checkStartDate);
 date[1].addEventListener("change", checkEndDate);
 
 expensesForm.addEventListener("submit", handleAddingExpenese);
+singleExpense.addEventListener("change", validateInputsForExpense);
+expenseAmount.addEventListener("input", validateInputsForExpense);
 
 // DESTINATION FORM VALIDITY
 function addDestination(e) {
@@ -80,6 +82,7 @@ function createDestinationDiv() {
 //APPEND THE INFO ABOUT DESTINATION
 function handleDestinationInfo() {
   if (localStorage.getItem("destination") !== null) {
+    //remove the clone of template when user enter new destination
     while (destDiv.firstChild) {
       destDiv.removeChild(destDiv.firstChild);
     }
@@ -90,14 +93,21 @@ function handleDestinationInfo() {
 //HANDLE ADDING EXPENSE TO THE LIST
 function handleAddingExpenese(e) {
   e.preventDefault();
-  const success = addExpenseToLocalStorage();
-  const listDiv = document.getElementById("logger");
-  if (success) {
-    listDiv.appendChild(
-      createOneSublistDiv(singleExpense.value, expenseAmount.value)
-    );
+  const isValid = validateInputsForExpense();
+  if (isValid) {
+    const success = addExpenseToLocalStorage();
+    const listDiv = document.getElementById("logger");
+    if (success) {
+      listDiv.appendChild(
+        createOneSublistDiv(singleExpense.value, expenseAmount.value)
+      );
+      singleExpense.value = "";
+      expenseAmount.value = "";
+    } else {
+      return;
+    }
   } else {
-    return;
+    return false;
   }
 }
 
@@ -157,12 +167,37 @@ function createOneSublistDiv(expense, amount) {
   }
   return subDiv;
 }
-//TO DO
-function validateInputsForExpense(expense, amount) {
-  if (expense === "") {
+
+//VALIDATE THE EXPENSES
+function validateInputsForExpense() {
+  const errorDivs = document.querySelectorAll(".error");
+  errorDivs.forEach((err) => {
+    err.style.display = "none";
+  });
+  if (singleExpense.value === "") {
+    createError(singleExpense, "Please enter the expense");
+    return false;
   }
+  if (!/^[a-zA-Z]+$/.test(singleExpense.value)) {
+    createError(singleExpense, "Please enter only letters");
+    return false;
+  }
+  if (expenseAmount.value === "") {
+    createError(expenseAmount, "Please enter the amount");
+    return false;
+  }
+
+  return true;
 }
 
+//CREATE ERROR DIV AND MESSAGE
+function createError(elem, message) {
+  const errorDiv = elem.nextElementSibling;
+  errorDiv.style.fontSize = "10px";
+  errorDiv.style.color = "red";
+  errorDiv.textContent = message;
+  errorDiv.style.display = "block";
+}
 //HANDLE GETTING INFO FROM LOCAL STORAGE WHEN  PAGE REFRESHED
 function onLoad() {
   handleDestinationInfo();
