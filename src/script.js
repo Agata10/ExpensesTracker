@@ -22,7 +22,7 @@ function addDestination(e) {
   const endDate = date[1].value;
   console.log(startDate);
   const obj = {
-    destination: destination,
+    destination: destination.toLowerCase(),
     startDate: startDate,
     endDate: endDate,
   };
@@ -100,8 +100,13 @@ function handleAddingExpenese(e) {
     return;
   }
 }
+
+//HANDLE ADDING EXPENSE TO THE STORAGE
 function addExpenseToLocalStorage() {
-  const obj = { expense: singleExpense.value, amount: expenseAmount.value };
+  const obj = {
+    expense: singleExpense.value.toLowerCase(),
+    amount: expenseAmount.value,
+  };
   let arr = [];
   if (localStorage.getItem("expenses") === null) {
     arr.push(obj);
@@ -125,21 +130,32 @@ function addExpenseToLocalStorage() {
   }
 }
 
+//CREATE ONE DIV FOR ONE EXPENSE
 function createOneSublistDiv(expense, amount) {
   const subDiv = document.createElement("div");
   subDiv.classList.add("sublist");
   subDiv.innerHTML = `
     <p class="sub-title">${expense}</p>
     <p class="sub-amount">${amount}</p>
-    <img src="../images/pencil-square.svg" alt="edit">
+    <div>
+    <img src="../images/pencil-square.svg" alt="edit" id="edit">
+    <img src="../images/trash.svg" alt="trash" id="delete">
+    </div>
     `;
+  const title = subDiv.firstElementChild; //it's first child
+  title.style.fontWeight = "600";
+  title.textContent =
+    title.textContent.charAt(0).toUpperCase() +
+    title.textContent.slice(1).toLowerCase();
   return subDiv;
 }
+//TO DO
 function validateInputsForExpense(expense, amount) {
   if (expense === "") {
   }
 }
 
+//HANDLE GETTING INFO FROM LOCAL STORAGE WHEN  PAGE REFRESHED
 function onLoad() {
   handleDestinationInfo();
   const arrayOfexpenses = JSON.parse(localStorage.getItem("expenses")) || [];
