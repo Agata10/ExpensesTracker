@@ -1,3 +1,4 @@
+//destination
 const destinationForm = document.getElementById("destination-form");
 const destinationInput = destinationForm.querySelector("input[type='text']");
 const date = destinationForm.querySelectorAll("input[type='date']");
@@ -6,6 +7,10 @@ const destDiv = document.getElementById("dest-log");
 const expensesForm = document.getElementById("expenses-form");
 const singleExpense = expensesForm.querySelector("#expense");
 const expenseAmount = expensesForm.querySelector("#expense-amount");
+//delete
+const listDiv = document.getElementById("logger");
+
+listDiv.addEventListener("click", handleDeleting);
 
 destinationForm.addEventListener("submit", addDestination);
 destinationInput.addEventListener("input", checkDestinationVal);
@@ -148,8 +153,8 @@ function createOneSublistDiv(expense, amount) {
     <p class="sub-title">${expense}</p>
     <p class="sub-amount">${amount}</p>
     <div>
-    <img src="../images/pencil-square.svg" alt="edit" id="edit">
-    <img src="../images/trash.svg" alt="trash" id="delete">
+    <button ><img src="../images/pencil-square.svg" alt="edit" id="edit"></button>
+    <button ><img src="../images/trash.svg" alt="trash" id="delete"></button>
     </div>
     `;
   const title = subDiv.firstElementChild; //it's first child
@@ -161,9 +166,11 @@ function createOneSublistDiv(expense, amount) {
   const lastChild = subDiv.lastElementChild;
   ///HTML COLLECTION
   for (let child of lastChild.children) {
-    child.style.width = "2rem";
-    child.style.marginLeft = "20px";
-    child.style.marginRight = "20px";
+    child.firstElementChild.style.width = "2rem";
+    child.firstElementChild.style.marginLeft = "20px";
+    child.firstElementChild.style.marginRight = "20px";
+    child.firstElementChild.style.cursor = "pointer";
+    child.firstElementChild.style.backgroundColor = "inherit";
   }
   return subDiv;
 }
@@ -197,6 +204,23 @@ function createError(elem, message) {
   errorDiv.style.color = "red";
   errorDiv.textContent = message;
   errorDiv.style.display = "block";
+}
+
+//DELETE ELEM FROM LIST
+function handleDeleting(e) {
+  console.log(e.target);
+  if (e.target.id === "delete") {
+    const subListParent = e.target.parentNode.parentNode.parentNode;
+    const expense =
+      e.target.parentNode.parentNode.parentNode.firstElementChild.textContent;
+    listDiv.removeChild(subListParent);
+    const arr = JSON.parse(localStorage.getItem("expenses"));
+    const newArr = arr.filter((exp) => {
+      return expense.toLowerCase() !== exp.expense;
+    });
+
+    localStorage.setItem("expenses", JSON.stringify(newArr));
+  }
 }
 //HANDLE GETTING INFO FROM LOCAL STORAGE WHEN  PAGE REFRESHED
 function onLoad() {
