@@ -217,14 +217,14 @@ function handleAddingBudget(e) {
 
 //VALIDATE THE VALUE OF BUDGET
 function validateBudget() {
-  if (budgetInput.value === "") {
-    createError(budgetInput, "Please enter the budget");
-    return false;
-  }
   const errorDivs = document.querySelectorAll(".error");
   errorDivs.forEach((err) => {
     err.style.display = "none";
   });
+  if (budgetInput.value === "") {
+    createError(budgetInput, "Please enter the budget");
+    return false;
+  }
   return true;
 }
 
