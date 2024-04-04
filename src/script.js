@@ -147,6 +147,14 @@ function createOneSublistDiv(expense, amount) {
   title.textContent =
     title.textContent.charAt(0).toUpperCase() +
     title.textContent.slice(1).toLowerCase();
+
+  const lastChild = subDiv.lastElementChild;
+  ///HTML COLLECTION
+  for (let child of lastChild.children) {
+    child.style.width = "2rem";
+    child.style.marginLeft = "20px";
+    child.style.marginRight = "20px";
+  }
   return subDiv;
 }
 //TO DO

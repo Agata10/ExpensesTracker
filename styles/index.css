@@ -36,7 +36,7 @@ main {
     row-gap: 40px;
     grid-template-rows: 1fr auto auto auto;
     grid-template-columns: repeat(3, 1fr);
-
+    width: 70vw;
 }
 
 .budget,
@@ -70,7 +70,6 @@ main {
 
 #logger h2 {
     align-self: self-start;
-    margin-left: 5%;
 }
 
 .sublist {
@@ -78,11 +77,12 @@ main {
     justify-content: space-between;
     font-size: 1.2rem;
     height: 40px;
-    width: 90%;
+    width: 100%;
 
     border-bottom: 1px solid black;
     padding-top: 10px;
 }
+
 
 
 footer {
