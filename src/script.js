@@ -90,7 +90,15 @@ function handleDestinationInfo() {
 //HANDLE ADDING EXPENSE TO THE LIST
 function handleAddingExpenese(e) {
   e.preventDefault();
-  addExpenseToLocalStorage();
+  const success = addExpenseToLocalStorage();
+  const listDiv = document.getElementById("logger");
+  if (success) {
+    listDiv.appendChild(
+      createOneSublistDiv(singleExpense.value, expenseAmount.value)
+    );
+  } else {
+    return;
+  }
 }
 function addExpenseToLocalStorage() {
   const obj = { expense: singleExpense.value, amount: expenseAmount.value };
@@ -98,21 +106,32 @@ function addExpenseToLocalStorage() {
   if (localStorage.getItem("expenses") === null) {
     arr.push(obj);
     localStorage.setItem("expenses", JSON.stringify(arr));
+    return true;
   } else {
     arr = JSON.parse(localStorage.getItem("expenses"));
-    console.log(arr);
-    arr.push(obj);
-    localStorage.setItem("expenses", JSON.stringify(arr));
+    let found = arr.find((e) => {
+      if (e.expense === singleExpense.value) {
+        alert("Ups. This expense already exists");
+        return true;
+      }
+    });
+    if (!found) {
+      arr.push(obj);
+      localStorage.setItem("expenses", JSON.stringify(arr));
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
-function createOneSublistDiv() {
+function createOneSublistDiv(expense, amount) {
   const subDiv = document.createElement("div");
   subDiv.classList.add("sublist");
   subDiv.innerHTML = `
-    <p class="sub-title">${singleExpense.value}</p>
-    <p class="sub-amount">${expenseAmount.value}</p>
-    <img src="./images/pencil-square.svg/>
+    <p class="sub-title">${expense}</p>
+    <p class="sub-amount">${amount}</p>
+    <img src="../images/pencil-square.svg" alt="edit">
     `;
   return subDiv;
 }
@@ -121,4 +140,13 @@ function validateInputsForExpense(expense, amount) {
   }
 }
 
-handleDestinationInfo();
+function onLoad() {
+  handleDestinationInfo();
+  const arrayOfexpenses = JSON.parse(localStorage.getItem("expenses")) || [];
+  arrayOfexpenses.forEach((item) => {
+    const listDiv = document.getElementById("logger");
+    listDiv.appendChild(createOneSublistDiv(item.expense, item.amount));
+  });
+}
+
+onLoad();
