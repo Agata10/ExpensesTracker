@@ -7,6 +7,9 @@ const destDiv = document.getElementById("dest-log");
 const expensesForm = document.getElementById("expenses-form");
 const singleExpense = expensesForm.querySelector("#expense");
 const expenseAmount = expensesForm.querySelector("#expense-amount");
+//budget
+const budgetForm = document.getElementById("budget-form");
+const budgetInput = budgetForm.querySelector("input");
 //delete
 const listDiv = document.getElementById("logger");
 
@@ -20,6 +23,8 @@ date[1].addEventListener("change", checkEndDate);
 expensesForm.addEventListener("submit", handleAddingExpenese);
 singleExpense.addEventListener("change", validateInputsForExpense);
 expenseAmount.addEventListener("input", validateInputsForExpense);
+
+budgetForm.addEventListener("submit", handleAddingBudget);
 
 // DESTINATION FORM VALIDITY
 function addDestination(e) {
@@ -194,6 +199,25 @@ function validateInputsForExpense() {
     return false;
   }
 
+  return true;
+}
+
+//HANDLE ADDING BUDGET
+function handleAddingBudget(e) {
+  const isValid = validateBudget();
+  e.preventDefault();
+  if (!isValid) {
+    return false;
+  }
+}
+
+//VALIDATE THE VALUE OF BUDGET
+function validateBudget() {
+  if (budgetInput.value === "") {
+    createError(budgetInput, "Please enter the amount");
+    return false;
+  }
+  errorDiv.style.display = "none;";
   return true;
 }
 
