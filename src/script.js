@@ -40,7 +40,7 @@ function addDestination(e) {
     endDate: endDate,
   };
   localStorage.setItem("destination", JSON.stringify(obj));
-  handleDestinationInfo();
+  appendDestinationInfo();
 }
 
 function checkDestinationVal() {
@@ -91,7 +91,7 @@ function createDestinationDiv() {
 }
 
 //APPEND THE INFO ABOUT DESTINATION
-function handleDestinationInfo() {
+function appendDestinationInfo() {
   if (localStorage.getItem("destination") !== null) {
     //remove the clone of template when user enter new destination
     while (destDiv.firstChild) {
@@ -255,7 +255,7 @@ function handleDeleting(e) {
 }
 //HANDLE GETTING INFO FROM LOCAL STORAGE WHEN  PAGE REFRESHED
 function onLoad() {
-  handleDestinationInfo();
+  appendDestinationInfo();
   const arrayOfexpenses = JSON.parse(localStorage.getItem("expenses")) || [];
   arrayOfexpenses.forEach((item) => {
     const listDiv = document.getElementById("logger");
