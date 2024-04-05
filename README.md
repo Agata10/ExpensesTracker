@@ -69,7 +69,7 @@ There are possibilities to expand app for more features like:
 
 1. Home page:
    <br>
-   <img src="./assests/images/screen.png" width="800" height="500">
+   <img src="./images/screen.png" width="800" height="500">
 
 ## Site link
 
