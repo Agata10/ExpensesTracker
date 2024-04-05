@@ -423,4 +423,21 @@ function onLoad() {
   });
 }
 
+async function searchImages(name) {
+  const apiUrl = `https://api.unsplash.com/search/photos?query=${name}&client_id=demo`;
+
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    if (data.results.length > 0) {
+      return data.results[0].urls.regular; // Return the URL of the first image
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching image:", error);
+    return null;
+  }
+}
+
 onLoad();

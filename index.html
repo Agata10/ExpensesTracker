@@ -11,6 +11,22 @@
     <header><h1>Wonderlust</h1></header>
     <main>
       <div class="content">
+        <!-- destination holder template -->
+        <div id="dest-log"></div>
+        <template id="temp-dest">
+          <div>
+            <p>Destination:</p>
+            <h3 id="place-holder">Your destination</h3>
+          </div>
+          <div>
+            <p>Start Date:</p>
+            <h4 id="start-date-holder">Start date</h4>
+          </div>
+          <div>
+            <p>End Date:</p>
+            <h4 id="end-date-holder">End date</h4>
+          </div>
+        </template>
         <!-- destination form -->
         <div id="destination">
           <h3>Destination</h3>
@@ -71,14 +87,6 @@
             <button type="submit">Add</button>
           </form>
         </div>
-        <!-- destination holder template -->
-        <div id="dest-log"></div>
-        <template id="temp-dest">
-          <img src="" alt="" />
-          <h3 id="place-holder">Your destination</h3>
-          <h4 id="start-date-holder">Start date</h4>
-          <h4 id="end-date-holder">End date</h4>
-        </template>
         <!-- expenses logger -->
         <div id="logger">
           <h2>Expenses List</h2>
