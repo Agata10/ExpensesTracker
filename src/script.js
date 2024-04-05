@@ -119,7 +119,7 @@ function handleAddingExpenese(e) {
       singleExpense.value = "";
       expenseAmount.value = "";
     } else {
-      return;
+      return false;
     }
   } else {
     return false;
@@ -153,7 +153,7 @@ function addExpenseToLocalStorage() {
   } else {
     arr = JSON.parse(localStorage.getItem("expenses"));
     let found = arr.find((e) => {
-      if (e.expense === singleExpense.value) {
+      if (e.expense === singleExpense.value.toLowerCase()) {
         alert("Ups. This expense already exists");
         return true;
       }
