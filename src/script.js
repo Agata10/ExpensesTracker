@@ -143,7 +143,6 @@ function calcSpending(arr = JSON.parse(localStorage.getItem("expenses"))) {
       sumOfExpenses += Number(item.amount);
     });
   }
-
   return sumOfExpenses;
 }
 
@@ -247,8 +246,14 @@ function validateExpenseAmount(
   amount = expenseAmount,
   arr = JSON.parse(localStorage.getItem("expenses"))
 ) {
+  let sumOfExpenses;
   const errorDivs = document.querySelectorAll(".error");
-  const sumOfExpenses = calcSpending(arr) + Number(amount.value);
+  if (amount === 0) {
+    sumOfExpenses = calcSpending(arr) + Number(amount);
+  } else {
+    sumOfExpenses = calcSpending(arr) + Number(amount.value);
+  }
+
   errorDivs.forEach((err) => {
     err.style.display = "none";
   });
@@ -258,8 +263,11 @@ function validateExpenseAmount(
   }
   if (
     sumOfExpenses > Number(localStorage.getItem("budget")) ||
-    amount.value > Number(localStorage.getItem("budget"))
+    amount > Number(localStorage.getItem("budget"))
   ) {
+    if (amount == 0) {
+      return false;
+    }
     createError(amount, "Ups. Exceeded budget. Change the budget.");
     return false;
   }
@@ -345,6 +353,7 @@ function handleEditing(e) {
     exp.value = title.textContent;
     expAmount.value = Number(amount.textContent.slice(0, -1));
     clicked = true;
+    document.body.style.filter = "blur(2px)";
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -361,6 +370,7 @@ function handleEditing(e) {
       if (foundIndex !== -1) {
         console.log("Nothing changed!");
         dialog.close();
+        document.body.style.filter = "";
         clicked = false;
         return;
       }
@@ -373,12 +383,11 @@ function handleEditing(e) {
         expense: exp.value.toLowerCase(),
         amount: expAmount.value,
       });
-
-      let valid = validateExpenseAmount(expAmount, newArr);
+      console.log(newArr);
+      let valid = validateExpenseAmount(0, newArr);
       if (!valid) {
+        alert("You would exceed the budget, can't do it.");
         console.log("Exceeded");
-        alert("You can't spent more than your budget");
-
         return false;
       } else {
         title.textContent =
@@ -391,6 +400,7 @@ function handleEditing(e) {
           Number(localStorage.getItem("budget"))
         );
         clicked = false;
+        document.body.style.filter = "";
         dialog.close();
       }
     });
@@ -399,6 +409,7 @@ function handleEditing(e) {
       if (event.target === dialog) {
         event.preventDefault();
         clicked = false;
+        document.body.style.filter = "";
         dialog.close();
       }
     });
