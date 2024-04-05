@@ -6,7 +6,7 @@ Skill based assessment for the Document Object Model
 
 - [About](#about)
 - [Technologies](#technologies)
-- [Future app possibilities](#possibilities)
+- [Future app possibilities](#future-app-possibilities)
 - [Screenshots](#screenshots)
 - [Site link](#site-link)
 
@@ -20,10 +20,8 @@ The app has single page, user can log in his upcomming trip and set the budget f
 <br>
 The user can add expenses below or equil to the budget he set up.
 
-<br>
-I was using `FLEXBOX` and `GRID` for layout following `responsive design` practices.
-<br>
-The 'Destination Form' is using HTML validation, the other two are using JavaScript validaton method.
+<br>I was using `FLEXBOX` and `GRID` for layout following `responsive design` practices.
+<br>The 'Destination Form' is using HTML validation, the other two are using JavaScript validaton method.
 <br>
 
 1. Validation for the Destination:
@@ -46,9 +44,9 @@ The 'Destination Form' is using HTML validation, the other two are using JavaScr
 
 The app allows user to update the expense after adding to the list. The dialog will show up and the validation is the same as for the expenses.
 
-All the information is saved in user window.localStorage.
+<br>All the information is saved in user window.localStorage.
 
-The user can see at the end, how much he spend money and see the visualisation of percent used.
+<br>The user can see at the end, how much he spend money and see the visualisation of percent used.
 
 ## Technologies
 
