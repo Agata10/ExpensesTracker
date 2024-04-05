@@ -198,8 +198,8 @@ function createOneSublistDiv(expense, amount) {
     <p class="sub-title">${expense}</p>
     <p class="sub-amount">${amount}$</p>
     <div>
-    <button ><img src="../images/pencil-square.svg" alt="edit" id="edit"></button>
-    <button ><img src="../images/trash.svg" alt="trash" id="delete"></button>
+    <button ><img src="./images/pencil-square.svg" alt="edit" id="edit"></button>
+    <button ><img src="./images/trash.svg" alt="trash" id="delete"></button>
     </div>
     `;
   const title = subDiv.firstElementChild; //it's first child
