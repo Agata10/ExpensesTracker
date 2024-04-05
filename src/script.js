@@ -339,11 +339,12 @@ function handleEditing(e) {
       if (clicked == false) {
         return;
       }
-      const foundIndex = arr.findIndex((item) => {
-        return (
-          item.expense === exp.value.toLowerCase() &&
-          item.amount === String(expAmount.value)
-        );
+      const foundIndex = arr.findIndex((item, i) => {
+        if (
+          item.expense == exp.value.toLowerCase() &&
+          item.amount == String(expAmount.value)
+        )
+          return true;
       });
       if (foundIndex !== -1) {
         console.log("Nothing changed!");
@@ -352,13 +353,15 @@ function handleEditing(e) {
         return;
       }
 
-      const newArr = arr.filter((item) => {
-        return title.textContent.toLowerCase() !== item.expense;
+      const indexInArr = arr.findIndex((item, i) => {
+        if (item.expense == title.textContent.toLowerCase()) return true;
       });
-      newArr.push({
+      const newArr = [...arr];
+      newArr.splice(indexInArr, 1, {
         expense: exp.value.toLowerCase(),
         amount: expAmount.value,
       });
+
       let valid = validateExpenseAmount(0, newArr);
       if (!valid) {
         console.log("Exceeded");
