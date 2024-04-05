@@ -104,6 +104,7 @@ function appendDestinationInfo() {
     destDiv.style.visibility = "visible";
   } else {
     destDiv.style.visibility = "hidden";
+    destDiv.setAttribute("class", "destination-log");
   }
 }
 
