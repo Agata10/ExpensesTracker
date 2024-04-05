@@ -116,6 +116,10 @@ function handleAddingExpenese(e) {
         createOneSublistDiv(singleExpense.value, expenseAmount.value)
       );
       calcSpending();
+      setColorForSpending(
+        calcSpending(),
+        Number(localStorage.getItem("budget"))
+      );
       singleExpense.value = "";
       expenseAmount.value = "";
     } else {
@@ -137,6 +141,13 @@ function calcSpending() {
   }
   spendingHolder.textContent = `Spending: ${sumOfExpenses}$`;
   return sumOfExpenses;
+}
+
+function setColorForSpending(spending, balance) {
+  const div = document.getElementById("color-balance");
+  const percent = (spending / balance) * 100;
+  div.style.width = `${percent}%`;
+  div.style.backgroundColor = "#52B788";
 }
 
 //HANDLE ADDING EXPENSE TO THE STORAGE
@@ -297,6 +308,7 @@ function handleDeleting(e) {
       budgetHolder.textContent = `Budget 0$`;
     }
     calcSpending();
+    setColorForSpending(calcSpending(), Number(localStorage.getItem("budget")));
   }
 }
 //HANDLE GETTING INFO FROM LOCAL STORAGE WHEN  PAGE REFRESHED
@@ -317,6 +329,9 @@ function onLoad() {
   }
   //set up the balance
   calcSpending();
+
+  //set color for percent of spending
+  setColorForSpending(calcSpending(), Number(localStorage.getItem("budget")));
 
   //error divs
   const errorDivs = document.querySelectorAll(".error");

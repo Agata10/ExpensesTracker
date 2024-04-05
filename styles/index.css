@@ -190,7 +190,41 @@ form>button:hover {
     scale: 1.1;
 }
 
+/*BUDGET LOG HOLDER*/
+#budget-log {
+    justify-self: center;
+    width: 30%;
+    border: 1px solid black;
+    padding: 20px;
+    height: 120px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    border: none;
+    background-color: #B7E4C7;
+    box-shadow: 0px 7px 18px -1px rgba(45, 106, 79, 0.33);
+}
 
+#budget-log:hover {
+    box-shadow: 0px 7px 18px -1px rgba(45, 106, 79, 0.33);
+}
+
+#balance-div {
+    margin: 7px 0;
+    background-color: white;
+    width: 55%;
+    height: 12px;
+    border-radius: 6px;
+}
+
+#color-balance {
+    height: 12px;
+    background-color: white;
+    border-radius: 6px;
+}
 
 footer {
     margin-top: auto;
@@ -198,6 +232,5 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    /*change*/
     background-color: #52B788;
 }
