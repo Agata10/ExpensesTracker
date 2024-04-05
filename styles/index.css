@@ -117,8 +117,17 @@ form>button:hover {
     background-color: #52B788;
 }
 
-.budget-form>button {
+#budget-form>button {
     width: 60%;
+}
+
+#budget-form>div {
+    width: 80%;
+}
+
+.error {
+    padding-top: 3px;
+    padding-left: 2px;
 }
 
 /* DESTINATION LOG */

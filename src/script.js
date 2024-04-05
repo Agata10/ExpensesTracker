@@ -133,7 +133,6 @@ function calcSpending() {
   if (arrayOfexpenses.length !== null) {
     arrayOfexpenses.forEach((item) => {
       sumOfExpenses += Number(item.amount);
-      console.log(sumOfExpenses);
     });
   }
   spendingHolder.textContent = `Spending: ${sumOfExpenses}$`;
@@ -224,7 +223,6 @@ function validateExpense() {
 function validateExpenseAmount() {
   const errorDivs = document.querySelectorAll(".error");
   const sumOfExpenses = calcSpending() + Number(expenseAmount.value);
-  console.log(sumOfExpenses);
   errorDivs.forEach((err) => {
     err.style.display = "none";
   });
@@ -275,7 +273,7 @@ function validateBudget() {
 //CREATE ERROR DIV AND MESSAGE
 function createError(elem, message) {
   const errorDiv = elem.nextElementSibling;
-  errorDiv.style.fontSize = "10px";
+  errorDiv.style.fontSize = "12px";
   errorDiv.style.color = "red";
   errorDiv.textContent = message;
   errorDiv.style.display = "block";
@@ -319,6 +317,12 @@ function onLoad() {
   }
   //set up the balance
   calcSpending();
+
+  //error divs
+  const errorDivs = document.querySelectorAll(".error");
+  errorDivs.forEach((err) => {
+    err.style.display = "none";
+  });
 }
 
 onLoad();
