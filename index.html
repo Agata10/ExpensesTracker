@@ -42,7 +42,7 @@
               />
               <div class="error"></div>
             </div>
-            <button type="submit">Add</button>
+            <button type="submit" id="edit-btn">Add</button>
           </form>
         </div>
         <!-- expense form -->
@@ -90,7 +90,33 @@
           <h3 class="budget-holder">Budget: 0$</h3>
         </div>
       </div>
+      <dialog id="edit-dialog">
+        <form id="edit-form">
+          <div>
+            <input
+              type="text"
+              name="dialog-expense"
+              placeholder="Enter expense.."
+              id="dialog-expense"
+              value=""
+            />
+            <div class="error"></div>
+          </div>
+          <div>
+            <input
+              type="number"
+              step=".01"
+              name="dialog-expense-amount"
+              placeholder="Enter amount.."
+              id="dialog-expense-amount"
+            />
+            <div class="error"></div>
+          </div>
+          <button type="submit">Edit</button>
+        </form>
+      </dialog>
     </main>
+
     <footer>Agata Deter &copy Copyrights 2024</footer>
   </body>
 </html>

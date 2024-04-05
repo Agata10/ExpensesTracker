@@ -15,6 +15,7 @@ const budgetHolder = document.querySelector(".budget-holder");
 const listDiv = document.getElementById("logger");
 
 listDiv.addEventListener("click", handleDeleting);
+listDiv.addEventListener("click", handleEditing);
 
 destinationForm.addEventListener("submit", addDestination);
 destinationInput.addEventListener("input", checkDestinationVal);
@@ -107,7 +108,7 @@ function appendDestinationInfo() {
 function handleAddingExpenese(e) {
   e.preventDefault();
 
-  const isValid = validateExpense() && validateExpenseAmount();
+  const isValid = validateExpense() && validateExpenseAmount(expenseAmount);
   if (isValid) {
     const success = addExpenseToLocalStorage();
     const listDiv = document.getElementById("logger");
@@ -130,12 +131,11 @@ function handleAddingExpenese(e) {
   }
 }
 
-function calcSpending() {
+function calcSpending(arr = JSON.parse(localStorage.getItem("expenses"))) {
   let sumOfExpenses = 0;
   const spendingHolder = document.querySelector(".spending-holder");
-  const arrayOfexpenses = JSON.parse(localStorage.getItem("expenses"));
-  if (arrayOfexpenses.length !== null) {
-    arrayOfexpenses.forEach((item) => {
+  if (arr.length !== null) {
+    arr.forEach((item) => {
       sumOfExpenses += Number(item.amount);
     });
   }
@@ -231,21 +231,24 @@ function validateExpense() {
   return true;
 }
 
-function validateExpenseAmount() {
+function validateExpenseAmount(
+  amount = expenseAmount,
+  arr = JSON.parse(localStorage.getItem("expenses"))
+) {
   const errorDivs = document.querySelectorAll(".error");
-  const sumOfExpenses = calcSpending() + Number(expenseAmount.value);
+  const sumOfExpenses = calcSpending(arr) + Number(amount.value);
   errorDivs.forEach((err) => {
     err.style.display = "none";
   });
-  if (expenseAmount.value === "") {
-    createError(expenseAmount, "Please enter the amount");
+  if (amount.value === "") {
+    createError(amount, "Please enter the amount");
     return false;
   }
   if (
     sumOfExpenses > Number(localStorage.getItem("budget")) ||
-    expenseAmount.value > Number(localStorage.getItem("budget"))
+    amount.value > Number(localStorage.getItem("budget"))
   ) {
-    createError(expenseAmount, "Ups. Exceeded budget. Change the budget.");
+    createError(amount, "Ups. Exceeded budget. Change the budget.");
     return false;
   }
   return true;
@@ -260,6 +263,7 @@ function handleAddingBudget(e) {
   }
   localStorage.setItem("budget", budgetInput.value);
   budgetHolder.textContent = `Budget ${budgetInput.value}$`;
+  setColorForSpending(calcSpending(), budgetInput.value);
   budgetInput.value = "";
 }
 
@@ -311,6 +315,82 @@ function handleDeleting(e) {
     setColorForSpending(calcSpending(), Number(localStorage.getItem("budget")));
   }
 }
+
+//EDITING ELEM FROM THE LIST
+function handleEditing(e) {
+  const dialog = document.getElementById("edit-dialog");
+  const form = dialog.querySelector("#edit-form");
+  const exp = document.getElementById("dialog-expense");
+  const expAmount = document.getElementById("dialog-expense-amount");
+  let clicked = false;
+
+  if (e.target.id === "edit") {
+    const arr = JSON.parse(localStorage.getItem("expenses"));
+    const subListParent = e.target.parentNode.parentNode.parentNode;
+    const title = subListParent.querySelector(".sub-title");
+    const amount = subListParent.querySelector(".sub-amount");
+    dialog.showModal();
+    exp.value = title.textContent;
+    expAmount.value = Number(amount.textContent.slice(0, -1));
+    clicked = true;
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (clicked == false) {
+        return;
+      }
+      const foundIndex = arr.findIndex((item) => {
+        return (
+          item.expense === exp.value.toLowerCase() &&
+          item.amount === String(expAmount.value)
+        );
+      });
+      if (foundIndex !== -1) {
+        console.log("Nothing changed!");
+        dialog.close();
+        clicked = false;
+        return;
+      }
+
+      const newArr = arr.filter((item) => {
+        return title.textContent.toLowerCase() !== item.expense;
+      });
+      newArr.push({
+        expense: exp.value.toLowerCase(),
+        amount: expAmount.value,
+      });
+      let valid = validateExpenseAmount(0, newArr);
+      if (!valid) {
+        console.log("Exceeded");
+        clicked = false;
+        dialog.close();
+        return;
+      }
+      console.log("submitting");
+
+      title.textContent =
+        exp.value.charAt(0).toUpperCase() + exp.value.slice(1).toLowerCase();
+      amount.textContent = `${expAmount.value}$`;
+      localStorage.setItem("expenses", JSON.stringify(newArr));
+      calcSpending();
+      setColorForSpending(
+        calcSpending(),
+        Number(localStorage.getItem("budget"))
+      );
+      clicked = false;
+      dialog.close();
+    });
+
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) {
+        event.preventDefault();
+        clicked = false;
+        dialog.close();
+      }
+    });
+  }
+}
+
 //HANDLE GETTING INFO FROM LOCAL STORAGE WHEN  PAGE REFRESHED
 function onLoad() {
   //set up location info
