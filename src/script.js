@@ -101,6 +101,9 @@ function appendDestinationInfo() {
       destDiv.removeChild(destDiv.firstChild);
     }
     destDiv.appendChild(createDestinationDiv());
+    destDiv.style.visibility = "visible";
+  } else {
+    destDiv.style.visibility = "hidden";
   }
 }
 
