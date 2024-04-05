@@ -15,14 +15,11 @@ Skill based assessment for the Document Object Model
 Tha website is the task from Software Engineering Bootcamp.
 <br>
 The requirements were to create single-page website and practice DOM manilpulation plus to use HTML and JavaScript forms validation, use BOM methods from window object.
-<br>
-The app has single page, user can log in his upcomming trip and set the budget for it.
-<br>
-The user can add expenses below or equil to the budget he set up.
+<br>The app has single page, user can log his upcomming trip and set the budget for it.
+<br>The user can add expenses below or equil to the budget he set up.
 
 <br>I was using `FLEXBOX` and `GRID` for layout following `responsive design` practices.
-<br>The 'Destination Form' is using HTML validation, the other two are using JavaScript validaton method.
-<br>
+<br>The 'Destination Form' is using HTML validation, the other two are using JavaScript validaton method.<br>
 
 1. Validation for the Destination:
 
