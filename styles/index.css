@@ -45,6 +45,7 @@ main {
 
 .content {
     display: grid;
+    justify-content: center;
     column-gap: 100px;
     row-gap: 40px;
     grid-template-rows: 1fr auto auto auto;
@@ -333,8 +334,7 @@ footer {
 
 @media only screen and (max-width: 660px) {
     header {
-        justify-content: center;
-        padding-left: 0;
+        padding-left: 40px;
     }
 
     main {
@@ -369,10 +369,10 @@ footer {
     }
 
     .sublist {
-        height: 80px;
-        grid-template-rows: repeat(3, 0.5fr);
-        font-size: 1.2rem;
-        width: 80%;
+        height: 60px;
+        grid-template-rows: 0.5fr 0.5fr 1fr;
+        font-size: 1.4rem;
+        width: 100%;
 
     }
 
@@ -382,6 +382,13 @@ footer {
 
     .sublist>div {
         padding-right: 0;
+        display: block;
+
+    }
+
+    img#edit,
+    img#delete {
+        margin: 0 !important;
     }
 
     #budget-log {
@@ -393,7 +400,7 @@ footer {
     }
 }
 
-@media only screen and (min-width: 661px) and (max-width: 1224px) {
+@media only screen and (min-width: 661px) and (max-width: 1024px) {
 
     header {
         padding-left: 50px;
