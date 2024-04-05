@@ -138,11 +138,13 @@ function handleAddingExpenese(e) {
 function calcSpending(arr = JSON.parse(localStorage.getItem("expenses"))) {
   let sumOfExpenses = 0;
   const spendingHolder = document.querySelector(".spending-holder");
-  if (arr.length !== null) {
+  if (arr !== null) {
     arr.forEach((item) => {
       sumOfExpenses += Number(item.amount);
+      console.log(Number(item.amount));
     });
   }
+
   spendingHolder.textContent = `Spending: ${sumOfExpenses}$`;
   return sumOfExpenses;
 }
@@ -366,22 +368,22 @@ function handleEditing(e) {
         amount: expAmount.value,
       });
 
-      let valid = validateExpenseAmount(0, newArr);
+      let valid = validateExpenseAmount(expAmount, newArr);
       if (!valid) {
         console.log("Exceeded");
+        alert("You can't spent more than your budget");
         clicked = false;
         dialog.close();
         return;
       }
-      console.log("submitting");
 
       title.textContent =
         exp.value.charAt(0).toUpperCase() + exp.value.slice(1).toLowerCase();
       amount.textContent = `${expAmount.value}$`;
       localStorage.setItem("expenses", JSON.stringify(newArr));
-      calcSpending();
+      calcSpending(newArr);
       setColorForSpending(
-        calcSpending(),
+        calcSpending(newArr),
         Number(localStorage.getItem("budget"))
       );
       clicked = false;
