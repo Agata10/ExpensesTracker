@@ -133,6 +133,7 @@ function calcSpending() {
   if (arrayOfexpenses.length !== null) {
     arrayOfexpenses.forEach((item) => {
       sumOfExpenses += Number(item.amount);
+      console.log(sumOfExpenses);
     });
   }
   spendingHolder.textContent = `Spending: ${sumOfExpenses}$`;
@@ -222,7 +223,8 @@ function validateExpense() {
 
 function validateExpenseAmount() {
   const errorDivs = document.querySelectorAll(".error");
-  const sumOfExpenses = calcSpending();
+  const sumOfExpenses = calcSpending() + Number(expenseAmount.value);
+  console.log(sumOfExpenses);
   errorDivs.forEach((err) => {
     err.style.display = "none";
   });
