@@ -39,11 +39,9 @@ The requirements were to create single-page website and practice DOM manilpulati
 - expance and amount are required
 - expance can't exceed the budget or sum of all expenses can't exceed the budget
 
-The app allows user to update the expense after adding to the list. The dialog will show up and the validation is the same as for the expenses.
-
-<br>All the information is saved in user window.localStorage.
-
-<br>The user can see at the end, how much he spend money and see the visualisation of percent used.
+The app allows user to update the expense after adding to the list. The dialog will show up and the validation is the same as for the expenses.<br>
+All the information is saved in user window.localStorage.<br>
+The user can see at the end, how much he spend money and see the visualisation of percent used.
 
 ## Technologies
 
