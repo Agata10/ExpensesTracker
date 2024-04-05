@@ -120,7 +120,7 @@ function handleAddingExpenese(e) {
       listDiv.appendChild(
         createOneSublistDiv(singleExpense.value, expenseAmount.value)
       );
-      calcSpending();
+      appendSpending(calcSpending());
       setColorForSpending(
         calcSpending(),
         Number(localStorage.getItem("budget"))
@@ -137,16 +137,19 @@ function handleAddingExpenese(e) {
 
 function calcSpending(arr = JSON.parse(localStorage.getItem("expenses"))) {
   let sumOfExpenses = 0;
-  const spendingHolder = document.querySelector(".spending-holder");
+
   if (arr !== null) {
     arr.forEach((item) => {
       sumOfExpenses += Number(item.amount);
-      console.log(Number(item.amount));
     });
   }
 
-  spendingHolder.textContent = `Spending: ${sumOfExpenses}$`;
   return sumOfExpenses;
+}
+
+function appendSpending(sum) {
+  const spendingHolder = document.querySelector(".spending-holder");
+  spendingHolder.textContent = `Spending: ${sum}$`;
 }
 
 function setColorForSpending(spending, balance) {
@@ -317,7 +320,7 @@ function handleDeleting(e) {
       localStorage.setItem("budget", 0);
       budgetHolder.textContent = `Budget 0$`;
     }
-    calcSpending();
+    appendSpending(calcSpending());
     setColorForSpending(calcSpending(), Number(localStorage.getItem("budget")));
   }
 }
@@ -372,22 +375,21 @@ function handleEditing(e) {
       if (!valid) {
         console.log("Exceeded");
         alert("You can't spent more than your budget");
+
+        return false;
+      } else {
+        title.textContent =
+          exp.value.charAt(0).toUpperCase() + exp.value.slice(1).toLowerCase();
+        amount.textContent = `${expAmount.value}$`;
+        localStorage.setItem("expenses", JSON.stringify(newArr));
+        appendSpending(calcSpending(newArr));
+        setColorForSpending(
+          calcSpending(newArr),
+          Number(localStorage.getItem("budget"))
+        );
         clicked = false;
         dialog.close();
-        return;
       }
-
-      title.textContent =
-        exp.value.charAt(0).toUpperCase() + exp.value.slice(1).toLowerCase();
-      amount.textContent = `${expAmount.value}$`;
-      localStorage.setItem("expenses", JSON.stringify(newArr));
-      calcSpending(newArr);
-      setColorForSpending(
-        calcSpending(newArr),
-        Number(localStorage.getItem("budget"))
-      );
-      clicked = false;
-      dialog.close();
     });
 
     dialog.addEventListener("click", (event) => {
@@ -417,7 +419,8 @@ function onLoad() {
     budgetHolder.textContent = `Budget: ${localStorage.getItem("budget")}$`;
   }
   //set up the balance
-  calcSpending();
+
+  appendSpending(calcSpending());
 
   //set color for percent of spending
   setColorForSpending(calcSpending(), Number(localStorage.getItem("budget")));
