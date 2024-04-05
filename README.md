@@ -21,8 +21,8 @@ The app has single page, user can log in his upcomming trip and set the budget f
 The user can add expenses below or equil to the budget he set up.
 
 <br>
-I was using `FLEXBOX` and `GRID` for layout following `responsive design` practices.<br>
-I added gif as background in table head and image as background of forms.<br>
+I was using `FLEXBOX` and `GRID` for layout following `responsive design` practices.
+<br>
 The 'Destination Form' is using HTML validation, the other two are using JavaScript validaton method.
 <br>
 
