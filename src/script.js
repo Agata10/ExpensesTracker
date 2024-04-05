@@ -155,6 +155,9 @@ function appendSpending(sum) {
 function setColorForSpending(spending, balance) {
   const div = document.getElementById("color-balance");
   const percent = (spending / balance) * 100;
+  if (spending === 0) {
+    div.style.width = `${0}%`;
+  }
   div.style.width = `${percent}%`;
   div.style.backgroundColor = "#52B788";
 }
@@ -320,9 +323,9 @@ function handleDeleting(e) {
       localStorage.setItem("budget", 0);
       budgetHolder.textContent = `Budget 0$`;
     }
-    appendSpending(calcSpending());
-    setColorForSpending(calcSpending(), Number(localStorage.getItem("budget")));
   }
+  appendSpending(calcSpending());
+  setColorForSpending(calcSpending(), Number(localStorage.getItem("budget")));
 }
 
 //EDITING ELEM FROM THE LIST
