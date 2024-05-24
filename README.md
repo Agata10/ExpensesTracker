@@ -9,6 +9,7 @@ Skill based assessment for the Document Object Model
 - [Future app possibilities](#future-app-possibilities)
 - [Screenshots](#screenshots)
 - [Site link](#site-link)
+- [License](#license)
 
 ## About
 
@@ -67,3 +68,7 @@ There are possibilities to expand app for more features like:
 ## Site link
 
 https://agata10.github.io/SBA-316/
+
+## License
+
+[LICENSE](LICENSE)
